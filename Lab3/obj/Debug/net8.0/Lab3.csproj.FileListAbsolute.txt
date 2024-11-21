@@ -27,3 +27,4 @@
 /Users/semenosipov/Documents/vscode/KFU_HW3/Lab3/obj/Debug/net8.0/Lab3.pdb
 /Users/semenosipov/Documents/vscode/KFU_HW3/Lab3/obj/Debug/net8.0/Lab3.genruntimeconfig.cache
 /Users/semenosipov/Documents/vscode/KFU_HW3/Lab3/obj/Debug/net8.0/ref/Lab3.dll
+/Users/semenosipov/Documents/vscode/Lab3/obj/Debug/net8.0/Lab3.sourcelink.json

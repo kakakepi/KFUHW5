@@ -92,6 +92,7 @@
         }
         static void Task1() {
             Console.WriteLine("\nЗадание 1\n");
+            Console.WriteLine("Дана последовательность из 10 чисел. Определить, является ли эта последовательность упорядоченной по возрастанию. В случае отрицательного ответа определить порядковый номер первого числа, которое нарушает данную последовательность.");
             Console.WriteLine("Введите числовую последовательность, если она окажется невозрастающей, то я остановлю поток ввода.");
             int[] numbers = new int[10];
             for (int i = 0; i < 10; i++)
@@ -111,6 +112,7 @@
         }
         static void Task2() {
             Console.WriteLine("\nЗадание 2\n");
+            Console.WriteLine("Игральным картам условно присвоены следующие порядковые номера в зависимости от их достоинства: «валету» — 11, «даме» — 12, «королю» — 13, «тузу» — 14. Порядковые номера остальных карт соответствуют их названиям («шестерка», «девятка» и т. п.). По заданному номеру карты k (6 <=k <= 14) определить достоинство соответствующей карты.");
             try
             {
                 Console.WriteLine("Введите номер карты - число от 6 до 14");
@@ -133,6 +135,7 @@
         }
         static void Task3() {
             Console.WriteLine("\nЗадание 3\n");
+            Console.WriteLine("Напишите программу , которая принимает на входе строку и производит выходные данные в соответствии со следующей таблицей.");
             var AlcoDict = new Dictionary<string, string>() {
                 {"jabroni", "Patron Tequila"} ,
                 {"school counselor", "Anything with Alcohol"} ,
@@ -142,8 +145,8 @@
                 {"rapper", "Cristal"}
             };
             Console.WriteLine("Введите значение из таблицы.");
-            string AlcoAlcoAlco = Console.ReadLine()?.Trim();
-            if (AlcoDict.TryGetValue(AlcoAlcoAlco.ToLower(), out string result))
+            string AlcoAlcoAlco = Console.ReadLine() ?? string.Empty;
+            if (AlcoDict.TryGetValue(AlcoAlcoAlco.ToLower().Trim(), out string result))
             {
                 Console.WriteLine(result);
             }
@@ -154,6 +157,7 @@
         }
         static void Task4() {
             Console.WriteLine("\nЗадание 4\n");
+            Console.WriteLine("Составить программу , которая в зависимости от порядкового номера дня недели (1, 2, ...,7) выводит на экран его название (понедельник, вторник, ..., воскресенье).");
             Console.WriteLine("Введите номер дня недели (от 1 до 7):");
             if (int.TryParse(Console.ReadLine(), out int dayNumber) && dayNumber >= 1 && dayNumber <= 7)
             {
@@ -167,6 +171,7 @@
         }
         static void Task5() {
             Console.WriteLine("\nЗадание 5\n");
+            Console.WriteLine("Создать массив строк. При помощи foreach обойти весь массив. При встрече элемента 'Hello Kitty' или 'Barbie doll' необходимо положить их в “сумку”, т.е. прибавить к результату . Вывести на экран сколько кукол в “сумке”.");
             string[] items = { "Hello Kitty", "Toy Car", "Barbie doll", "Lego Set", "Hello Kitty", "Action Figure", "Barbie doll" };
             int bagCount = 0;
             foreach (string item in items)
@@ -177,6 +182,14 @@
                 }
             }
             Console.WriteLine($"В сумке {bagCount} куклы(ол).");
+        }
+        static void Main(string[] args)
+        {
+            Task1();
+            Task2();
+            Task3();
+            Task4();
+            Task5();
         }
     }
 }
