@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/semenosipov/Documents/vscode/KFU_HW3/Lab3/Lab3.csproj",
+      "projectUniqueName": "/Users/semenosipov/Documents/vscode/Lab3/Lab3.csproj",
       "projectName": "Lab3",
-      "projectPath": "/Users/semenosipov/Documents/vscode/KFU_HW3/Lab3/Lab3.csproj",
+      "projectPath": "/Users/semenosipov/Documents/vscode/Lab3/Lab3.csproj",
       "packagesPath": "/Users/semenosipov/.nuget/packages/",
-      "outputPath": "/Users/semenosipov/Documents/vscode/KFU_HW3/Lab3/obj/",
+      "outputPath": "/Users/semenosipov/Documents/vscode/Lab3/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/semenosipov/.nuget/NuGet/NuGet.Config"
