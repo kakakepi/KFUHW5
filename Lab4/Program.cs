@@ -11,6 +11,10 @@ namespace Lab3
             Task1(args);
             Task2();
             Task3();
+            Task4(args);
+            Task5();
+            Task6();
+            
         }
 
         /// <summary>
@@ -72,7 +76,213 @@ namespace Lab3
 
         static void Task2()
         {
-            Console.WriteLine("\nУпражнение 6.2(задание)\n");
+            Console.WriteLine("\nУпражнение 6.2\n");
+            Console.WriteLine("Написать программу, реализующую умножение двух матриц, заданных в виде двумерного массива. В программе предусмотреть два метода: метод печати матрицы, метод умножения матриц (на вход две матрицы, возвращаемое значение – матрица).");
+
+            Console.WriteLine("Инициализируем первую матрицу:");
+            int[,] matrix1 = CreateTwoDimArray(3, 3);
+
+            Console.WriteLine("Инициализируем вторую матрицу:");
+            int[,] matrix2 = CreateTwoDimArray(3, 3);
+
+            Console.WriteLine("Первая матрица:");
+            PrintMatrix(matrix1);
+
+            Console.WriteLine("Вторая матрица:");
+            PrintMatrix(matrix2);
+
+            int[,] resultMatrix = MatrixMultiply(matrix1, matrix2);
+
+            Console.WriteLine("Результат перемножения матриц:");
+            PrintMatrix(resultMatrix);
+        }
+
+        /// <summary>
+        /// Создает двумерный массив с заданным количеством строк и столбцов.
+        /// Запрашивает значения у пользователя.
+        /// </summary>
+        /// <param name="rows">Количество строк.</param>
+        /// <param name="cols">Количество столбцов.</param>
+        /// <returns>Двумерный массив.</returns>
+        static int[,] CreateTwoDimArray(int rows, int cols)
+        {
+            int[,] matrix = new int[rows, cols];
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.WriteLine($"Введите элемент {i + 1}-й строки {j + 1}-го столбца:");
+                    matrix[i, j] = EnterNumber();
+                }
+            }
+            return matrix;
+        }
+        /// <summary>
+        /// Умножает две матрицы, заданные в виде двумерных массивов.
+        /// </summary>
+        /// <param name="matrix1">Первая матрица.</param>
+        /// <param name="matrix2">Вторая матрица.</param>
+        /// <returns>Результат умножения матриц в виде двумерного массива.</returns>
+        /// <exception cref="InvalidOperationException">
+        /// Если количество столбцов первой матрицы не равно количеству строк второй.
+        /// </exception>
+        static int[,] MatrixMultiply(int[,] matrix1, int[,] matrix2)
+        {
+            int rows1 = matrix1.GetLength(0);
+            int cols1 = matrix1.GetLength(1);
+            int rows2 = matrix2.GetLength(0);
+            int cols2 = matrix2.GetLength(1);
+
+            if (cols1 != rows2)
+            {
+                throw new InvalidOperationException("Количество столбцов первой матрицы должно совпадать с количеством строк второй матрицы.");
+            }
+
+            int[,] resultMatrix = new int[rows1, cols2];
+
+            for (int i = 0; i < rows1; i++)
+            {
+                for (int j = 0; j < cols2; j++)
+                {
+                    int sum = 0;
+                    for (int k = 0; k < cols1; k++)
+                    {
+                        sum += matrix1[i, k] * matrix2[k, j];
+                    }
+                    resultMatrix[i, j] = sum;
+                }
+            }
+
+            return resultMatrix;
+        }
+
+        /// <summary>
+        /// Печатает матрицу, заданную в виде двумерного массива.
+        /// </summary>
+        /// <param name="matrix">Матрица для печати.</param>
+        static void PrintMatrix(int[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write($"{matrix[i, j]} ");
+                }
+                Console.WriteLine();
+            }
+        }
+        
+        static void Task3()
+        {
+            Console.WriteLine("\nУпражнение 6.3\n");
+            Console.WriteLine("Написать программу, вычисляющую среднюю температуру за год. Создать двумерный рандомный массив temperature[12,30], в котором будет храниться температура для каждого дня месяца (предполагается, что в каждом месяце 30 дней). Сгенерировать значения температур случайным образом. Для каждого месяца распечатать среднюю температуру. Для этого написать метод, который по массиву temperature [12,30] для каждого месяца вычисляет среднюю температуру в нем, и в качестве результата возвращает массив средних температур. Полученный массив средних температур отсортировать по возрастанию.");
+            
+            Random rand = new Random();
+            int[,] temperature = new int[12,30];
+            string[] monthNames = { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
+            
+            for (int i = 0; i < 12; i++){
+                for (int j = 0; j < 30; j++) {
+                    temperature[i, j] = rand.Next(-40, 40);
+                }
+            }
+            double[] ans = AvgTemp(temperature);
+            var monthDict = new Dictionary<string, double>();
+            for (int i = 0; i < 12; i++)
+            {
+                monthDict.Add(monthNames[i], ans[i]);
+            }
+            
+            Console.WriteLine("\nСредние температуры по месяцам (отсортированные):");
+            foreach (var pair in monthDict.OrderBy(pair => pair.Value))
+            {
+                Console.WriteLine($"{pair.Key}: {pair.Value:F2}");
+            }
+            
+            Console.WriteLine($"Среднегодовая температура: {ans.Average():F2}");
+        }
+
+        /// <summary>
+        /// Вычисляет среднюю температуру для каждого месяца на основе данных о температуре.
+        /// </summary>
+        /// <param name="temperature">
+        /// Словарь, где ключи — названия месяцев, а значения — массивы температур по дням.
+        /// </param>
+        /// <returns>Массив средних температур для каждого месяца.</returns>
+        static double[] AvgTemp(int[,] temperature)
+        {
+            int rows = temperature.GetLength(0);
+            int cols = temperature.GetLength(1);
+            double[] meanTemp = new double[rows];
+
+            for (int i = 0; i < rows; i++)
+            {
+                double sum = 0;
+                for (int j = 0; j < cols; j++)
+                {
+                    sum += temperature[i, j];
+                }
+                meanTemp[i] = sum / cols;
+            }
+            return meanTemp;
+        }
+
+
+        static void Task4(string[] args1)
+        {
+            Console.WriteLine("\nДомашняя работа 6.1(задание)\n");
+            Console.WriteLine("Написать программу, которая вычисляет число гласных и согласных букв в файле. Имя файла передавать как аргумент в функцию Main. Содержимое текстового файла заносится в массив символов. Количество гласных и согласных букв определяется проходом по массиву. Предусмотреть метод, входным параметром которого является массив символов. Метод вычисляет количество гласных и согласных букв.");
+            string filePath = args1[0];
+            try
+            {
+                Console.WriteLine($"Чтение файла по пути: {filePath}");
+
+                string content = File.ReadAllText(filePath);
+                List<char> chars = new List<char>(content);
+                (int vowelsCount, int consonantsCount) = CountVowelsAndConsonants(chars);
+
+                Console.WriteLine($"Количество гласных: {vowelsCount}");
+                Console.WriteLine($"Количество согласных: {consonantsCount}");
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine($"Ошибка: файл '{filePath}' не найден.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Произошла ошибка: {ex.Message}");
+            }
+        }
+
+        static (int, int) CountVowelsAndConsonants(List<char> chars)
+        {
+            string vowels = "aeiouyаеёиоуыэюя";
+            string consonants = "bcdfghjklmnpqrstvwxyzбвгджзйклмнпрстфхцчшщ";
+
+            int vowelsCount = 0;
+            int consonantsCount = 0;
+
+            foreach (char c in chars)
+            {
+                char lowerChar = char.ToLower(c);
+
+                if (vowels.Contains(lowerChar))
+                {
+                    vowelsCount++;
+                }
+                else if (consonants.Contains(lowerChar))
+                {
+                    consonantsCount++;
+                }
+            }
+
+            return (vowelsCount, consonantsCount);
+        }
+        static void Task5()
+        {
+            Console.WriteLine("\nДомашняя работа 6.2(задание)\n");
             Console.WriteLine("Написать программу, реализующую умножению двух матриц, заданных в виде двумерного массива. В программе предусмотреть два метода: метод печати матрицы, метод умножения матриц (на вход две матрицы, возвращаемое значение – матрица).");
             Console.WriteLine("Инициализируем первую матрицу:");
             var matrix1 = CreateTwoDimLinkedList(3, 3);
@@ -222,13 +432,15 @@ namespace Lab3
                 Console.WriteLine();
             }
         }
-        static void Task3()
+        static void Task6()
         {
-            Console.WriteLine("\nУпражнение 6.3(задание)\n");
+            Console.WriteLine("\nДомашняя работа 6.3(задание)\n");
             Console.WriteLine("Написать программу, вычисляющую среднюю температуру за год. Создать двумерный рандомный массив temperature[12,30], в котором будет храниться температура для каждого дня месяца (предполагается, что в каждом месяце 30 дней). Сгенерировать значения температур случайным образом. Для каждого месяца распечатать среднюю температуру. Для этого написать метод, который по массиву temperature [12,30] для каждого месяца вычисляет среднюю температуру в нем, и в качестве результата возвращает массив средних температур. Полученный массив средних температур отсортировать по возрастанию.");
+            
             Random rand = new Random();
             Dictionary<string, int[]> temperature = new Dictionary<string, int[]>();
             string[] monthNames = { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
+            
             foreach (string month in monthNames)
             {
                 int[] monthDay = new int[30];
@@ -236,17 +448,24 @@ namespace Lab3
                 {
                     monthDay[i] = rand.Next(-40, 40);
                 }
-
                 temperature.Add(month, monthDay);
             }
             double[] ans = AvgTemp(temperature);
-            for (int i = 0; i < 12; i++) 
+            var monthDict = new Dictionary<string, double>();
+            for (int i = 0; i < 12; i++)
             {
-                Console.WriteLine($"{temperature.Keys.ElementAt(i)}: {ans[i]:F1}{"\u00B0"}C");
+                monthDict.Add(monthNames[i], ans[i]);
             }
-            Console.WriteLine($"Среднегодовая температура{(double)(ans.Sum()/12)}");
-
+            
+            Console.WriteLine("\nСредние температуры по месяцам (отсортированные):");
+            foreach (var pair in monthDict.OrderBy(pair => pair.Value))
+            {
+                Console.WriteLine($"{pair.Key}: {pair.Value:F2}");
+            }
+            
+            Console.WriteLine($"Среднегодовая температура: {ans.Average():F2}");
         }
+
         /// <summary>
         /// Вычисляет среднюю температуру для каждого месяца на основе данных о температуре.
         /// </summary>
@@ -255,7 +474,6 @@ namespace Lab3
         /// </param>
         /// <returns>Массив средних температур для каждого месяца.</returns>
         static double[] AvgTemp(Dictionary<string, int[]> temperature)
-
         {
             double[] meanTemp = new double[temperature.Count];
             int index = 0;
